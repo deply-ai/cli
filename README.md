@@ -17,7 +17,7 @@ pip install deplyai-cli
 After installation, you can start using the CLI to manage your DeplyAI projects:
 ```
 deply auth login
-deply pipeline create --filename pipeline.yml
+deply pipelines create --filename pipeline.yml
 ```
 For more information, run:
 ```
