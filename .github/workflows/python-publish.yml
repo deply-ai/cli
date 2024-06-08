@@ -31,12 +31,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install build twine setuptools wheel
         pip install -r requirements.txt
-    - name: Build package
+    - name: Build and upload package
       run: |
         make clean
         make build
         make upload
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
