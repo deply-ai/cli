@@ -20,7 +20,7 @@ setup(
     name='deplyai-cli',
     maintainer="DeplyAI",
     maintainer_email="support@deplyai.com",
-    version='0.3.1',
+    version='0.3.2',
     zip_safe=False,
     description='DeplyAI CLI',
     platforms=['Linux', 'Windows', 'MacOS'],
