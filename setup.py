@@ -40,7 +40,7 @@ setup(
     install_requires=install_requires,
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'Environment :: Console'
+        'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'Natural Language :: English',
