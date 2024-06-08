@@ -20,7 +20,7 @@ setup(
     name='deplyai-cli',
     maintainer="DeplyAI",
     maintainer_email="support@deplyai.com",
-    version='0.3.4',
+    version='0.3.5',
     zip_safe=False,
     description='DeplyAI CLI',
     platforms=['Linux', 'Windows', 'MacOS'],
@@ -34,7 +34,22 @@ setup(
     },
     license='BSD-3-Clause',
     scripts=['deply'],
+    python_requires=">= 3.10",
     long_description=long_description,
     long_description_content_type='text/markdown',
-    install_requires=install_requires
+    install_requires=install_requires,
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console'
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'Natural Language :: English',
+        'License :: OSI Approved :: BSD License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+    ],
 )
