@@ -11,23 +11,44 @@ from .util import TokenAuthSession, BASE_URL
 import json
 
 CREATE_USAGE_HEAD: str = '''\
-deply pipeline create <options>
+deply pipelines create <options>
 '''
 
 DELETE_USAGE_HEAD: str = '''\
-deply pipeline create <options>
+deply pipelines create <options>
 '''
 
 USAGE_HEAD: str = '''\
-deply pipeline <verb> <options>
+deply pipelines <verb> <options>
 '''
 
 USAGE_EXAMPLES: str = '''\
 Examples:
 
-deply pipeline create --filename pipeline.yml
-deply pipeline delete --id 1
+deply pipelines create --filename pipeline.yml
+deply pipelines delete --id 1
 '''
+
+class PipelineListHandler(object):
+    """
+    Handler for pipeline delete commands
+    """
+    def __init__(self):
+        self.auth = get_current_profile_credentials()
+        if not self.auth:
+            return
+        self.tenant = self.auth['tenant']
+        self.auth_session = TokenAuthSession(self.auth['token'])
+    def run(self, args: argparse.Namespace):
+        """
+        Parse and execute the command
+        :param unparsed_args: Unparsed arguments for this property
+        :return: Nothing
+        """
+        if not self.auth:
+            return
+        response = self.auth_session.get(f"{BASE_URL}/tenants/{self.tenant}/pipelines")
+        print(json.dumps(response.json(), indent=4, sort_keys=True))
 
 class PipelineDeleteHandler(object):
     """
@@ -83,7 +104,7 @@ class PipelineHandler(object):
     """
     def __init__(self):
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(
-            prog='deply pipeline',
+            prog='deply pipelines',
             description='Manage pipelines via the DeplyAI API',
             usage=USAGE_HEAD,
             epilog=USAGE_EXAMPLES,
@@ -97,6 +118,9 @@ class PipelineHandler(object):
         self.delete_parser = subparsers.add_parser('delete')
         self.delete_parser.add_argument('--pipeline-id', type=str, help='The pipeline ID to delete', dest='pipeline_id', required=True)
 
+        self.list_parser = subparsers.add_parser('list')
+
+
     def run(self, unparsed_args: list):
         """
         Parse and execute the command
@@ -109,5 +133,7 @@ class PipelineHandler(object):
                 PipelineCreateHandler().run(args)
             case 'delete':
                 PipelineDeleteHandler().run(args)
+            case 'list':
+                PipelineListHandler().run(args)
             case _:
                 self.parser.print_help()

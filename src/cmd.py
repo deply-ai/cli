@@ -26,7 +26,7 @@ Supported properties are:
 
 prop_matcher = {
     'auth': AuthHandler,
-    'pipeline': PipelineHandler
+    'pipelines': PipelineHandler
 }
 
 def commandline_parser(unparsed_args: None or list = None):
