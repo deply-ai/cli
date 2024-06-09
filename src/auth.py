@@ -117,13 +117,14 @@ and complete the authentication steps.
                 except:
                     pass
                 token_response = poll_token_endpoint(device_code, timeout=polling_interval)
-                if 'access_token' in token_response:
+                if 'access_token' in token_response and 'id_token' in token_response:
                     try:
                         print("Finishing up...")
                         discovery_data = discover_tenant(token_response['access_token'])
                         tenant = int(discovery_data['tenant_id'])
                         set_profile_credentials(profile=profile, credentials={
                             "token": token_response['access_token'], 
+                            "id_token": token_response['id_token'], 
                             "tenant": tenant
                         })
                         print("Authentication complete!")
