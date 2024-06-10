@@ -8,6 +8,7 @@ Setup tools wrapper
 from setuptools import find_packages, setup
 import os
 from pathlib import Path
+from src import VERSION
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 requirement_path = "requirements.txt"
@@ -20,7 +21,7 @@ setup(
     name='deplyai-cli',
     maintainer="DeplyAI",
     maintainer_email="support@deplyai.com",
-    version='0.4.1',
+    version=VERSION,
     zip_safe=False,
     description="Command Line Environment for DeplyAI's integrated AI agent platform.",
     platforms=['Linux', 'Windows', 'MacOS'],

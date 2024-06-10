@@ -2,11 +2,14 @@ import os, yaml, logging, requests
 from deplyai._schema.cli import ProfileCredentials
 from typing import Dict
 from os.path import expanduser, join
+import platform
+from src import VERSION
 path = os.environ.get("DEPLY_CONFIG_FILE", join(expanduser("~"), ".deply/", "config"))
 BASE_URL = "https://api.deplyai.com/v1"
 class TokenAuthSession:
     def __init__(self, token):
-        self.headers = {'Authorization': f'Bearer {token}'}
+        default_ua = requests.utils.default_headers()['User-Agent']
+        self.headers = {'Authorization': f'Bearer {token}', 'User-Agent': f'DeplyCLI/{VERSION} ({platform.system()} {platform.release()}; {default_ua})'}
     
     def get(self, url, **kwargs):
         headers = kwargs.pop('headers', {})
