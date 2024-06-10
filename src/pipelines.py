@@ -7,6 +7,7 @@ Wrapper to manage pipelines with the Deply API
 import argparse, yaml
 from .util import get_current_profile_credentials
 from deplyai._schema import Pipeline
+from deplyai._utils.print import pretty_print_json
 from .util import TokenAuthSession, BASE_URL
 import json
 
@@ -70,8 +71,7 @@ class PipelineDeleteHandler(object):
             return
         pipeline_id = args.pipeline_id
         response = self.auth_session.delete(f"{BASE_URL}/tenants/{self.tenant}/pipelines/{pipeline_id}")
-        print(json.dumps(response.json(), indent=4, sort_keys=True))
-
+        pretty_print_json(response.json())
 
 class PipelineCreateHandler(object):
     """
@@ -95,7 +95,7 @@ class PipelineCreateHandler(object):
             pipeline = yaml.safe_load(f)
         pipeline_json: str = Pipeline(**pipeline).model_dump()
         response = self.auth_session.post(f"{BASE_URL}/tenants/{self.tenant}/pipelines", json=pipeline_json)
-        print(json.dumps(response.json(), indent=4, sort_keys=True))
+        pretty_print_json(response.json())
 
 
 class PipelineHandler(object):
