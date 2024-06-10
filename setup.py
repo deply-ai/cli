@@ -8,7 +8,7 @@ Setup tools wrapper
 from setuptools import find_packages, setup
 import os
 from pathlib import Path
-from src import VERSION
+from src.version import VERSION
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 requirement_path = "requirements.txt"

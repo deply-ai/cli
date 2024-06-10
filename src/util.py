@@ -3,7 +3,7 @@ from deplyai._schema.cli import ProfileCredentials
 from typing import Dict
 from os.path import expanduser, join
 import platform
-from src import VERSION
+from .version import VERSION
 path = os.environ.get("DEPLY_CONFIG_FILE", join(expanduser("~"), ".deply/", "config"))
 BASE_URL = "https://api.deplyai.com/v1"
 class TokenAuthSession:
