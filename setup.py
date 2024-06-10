@@ -22,7 +22,7 @@ setup(
     maintainer_email="support@deplyai.com",
     version='0.4.1',
     zip_safe=False,
-    description='DeplyAI CLI',
+    description="Command Line Environment for DeplyAI's integrated AI agent platform.",
     platforms=['Linux', 'Windows', 'MacOS'],
     include_package_data=True,
     keywords='deplyai',
