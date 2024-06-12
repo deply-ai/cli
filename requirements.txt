@@ -1,2 +1,2 @@
-deplyai>=0.2.0
+deplyai>=0.2.3
 requests
