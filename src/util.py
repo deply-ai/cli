@@ -1,5 +1,5 @@
 import os, yaml, logging, requests
-from deplyai._schema.cli import ProfileCredentials
+from deplyai.schema.cli import ProfileCredentials
 from typing import Dict
 from os.path import expanduser, join
 import platform

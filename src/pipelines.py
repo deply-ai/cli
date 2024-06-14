@@ -6,7 +6,7 @@ Wrapper to manage pipelines with the Deply API
 
 import argparse, yaml
 from .util import get_current_profile_credentials
-from deplyai._schema import Pipeline
+from deplyai.schema import Pipeline
 from deplyai._utils.print import pretty_print_json
 from .util import TokenAuthSession, BASE_URL
 import json
