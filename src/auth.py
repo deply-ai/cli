@@ -5,7 +5,7 @@ Wrapper to authenticate to the Deply API
 """
 
 import argparse, requests, sys, subprocess, os
-from .util import delete_profile_credentials, set_profile_credentials
+from .util import delete_profile_credentials, set_profile_credentials, get_user_agent
 import time
 USAGE_HEAD: str = '''\
 deply auth <verb> <options>
@@ -29,7 +29,7 @@ def discover_tenant(bearer_token: str):
     dict: A dictionary with the response data or error message.
     """
     url = 'https://api.deplyai.com/v1/discovery'
-    headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {bearer_token}'}
+    headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {bearer_token}', 'User-Agent': get_user_agent()}
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()  # Raise an exception for HTTP error responses
@@ -42,7 +42,8 @@ def discover_tenant(bearer_token: str):
 
 def poll_token_endpoint(device_code,timeout):
     while True:
-        response = requests.get(f"https://api.deplyai.com/oauth/token?device_code={device_code}",)
+        headers = {'User-Agent': get_user_agent()}
+        response = requests.get(f"https://api.deplyai.com/oauth/token?device_code={device_code}",headers=headers)
         response_data = response.json()
         if response_data.get('done') == True:
             return response_data  # Token received
@@ -63,7 +64,7 @@ def post_device_code():
     dict: A dictionary with the response data or error message.
     """
     url = 'https://api.deplyai.com/oauth/device/code'
-    headers = {'Content-Type': 'application/json'}
+    headers = {'Content-Type': 'application/json', 'User-Agent': get_user_agent()}
     response = requests.post(url, headers=headers)
     response.raise_for_status()  # Raise an exception for HTTP error responses
     return response.json()  # Return the JSON response if the request was successful

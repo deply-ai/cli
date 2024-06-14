@@ -6,10 +6,15 @@ import platform
 from .version import VERSION
 path = os.environ.get("DEPLY_CONFIG_FILE", join(expanduser("~"), ".deply/", "config"))
 BASE_URL = "https://api.deplyai.com/v1"
+
+def get_user_agent():
+    default_ua = requests.utils.default_headers()['User-Agent']
+    return f'DeplyCLI/{VERSION} ({platform.system()} {platform.release()}; {default_ua})'
+
 class TokenAuthSession:
     def __init__(self, token):
         default_ua = requests.utils.default_headers()['User-Agent']
-        self.headers = {'Authorization': f'Bearer {token}', 'User-Agent': f'DeplyCLI/{VERSION} ({platform.system()} {platform.release()}; {default_ua})'}
+        self.headers = {'Authorization': f'Bearer {token}', 'User-Agent': get_user_agent()}
     
     def get(self, url, **kwargs):
         headers = kwargs.pop('headers', {})
