@@ -1,4 +1,7 @@
-import os, yaml, logging, requests
+import os
+import yaml
+import logging
+import requests
 from deplyai.schema.cli import ProfileCredentials
 from typing import Dict
 from os.path import expanduser, join
@@ -42,7 +45,7 @@ def get_current_profile_credentials() -> ProfileCredentials:
     try:
         with open(path, "rb") as f:
             config = yaml.safe_load(f)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         logging.error("Deply config file not found.")
         return None
     if 'profiles' not in config:
@@ -60,7 +63,7 @@ def set_profile_credentials(profile: str = 'default', credentials: Dict[str, str
     try:
         with open(path, "rb") as f:
             config = yaml.safe_load(f)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         config = {'profiles': {}}
     try:
         if 'profiles' not in config:

@@ -4,7 +4,11 @@
 Wrapper to authenticate to the Deply API
 """
 
-import argparse, requests, sys, subprocess, os
+import argparse
+import requests
+import sys
+import subprocess
+import os
 from .util import delete_profile_credentials, set_profile_credentials, get_user_agent
 import time
 USAGE_HEAD: str = '''\
@@ -45,9 +49,9 @@ def poll_token_endpoint(device_code,timeout):
         headers = {'User-Agent': get_user_agent()}
         response = requests.get(f"https://api.deplyai.com/oauth/token?device_code={device_code}",headers=headers)
         response_data = response.json()
-        if response_data.get('done') == True:
+        if response_data.get('done'):
             return response_data  # Token received
-        elif response_data.get('done') == False:
+        elif not response_data.get('done'):
             time.sleep(timeout)
         else:
             print('Unexpected error:', response_data.get('error'))
@@ -95,7 +99,7 @@ class AuthHandler(object):
         match args.verb:
             case 'login':
                 print(f"Authenticating user to profile \"{profile}\"...")
-                if args.token != None:
+                if args.token is not None:
                     try:
                         print("Authenticating using provided token...")
                         discovery_data = discover_tenant(args.token)
@@ -106,7 +110,7 @@ class AuthHandler(object):
                             "tenant": tenant
                         })
                         print("Authentication complete!")
-                    except:
+                    except Exception:
                         print("Recieved tokens but could not complete authentication process. Please try again.")
                 else:
                     data = post_device_code()
@@ -130,7 +134,7 @@ class AuthHandler(object):
                             subprocess.Popen(['open', verification_uri_complete])
                         else:
                             subprocess.Popen(['xdg-open', verification_uri_complete])
-                    except:
+                    except Exception:
                         pass
                     token_response = poll_token_endpoint(device_code, timeout=polling_interval)
                     if 'access_token' in token_response and 'id_token' in token_response:
@@ -144,7 +148,7 @@ class AuthHandler(object):
                                 "tenant": tenant
                             })
                             print("Authentication complete!")
-                        except:
+                        except Exception:
                             print("Recieved tokens but could not complete authentication process. Please try again.")
                     else:
                         print('Failed to retrieve access token:', token_response.get('message'))

@@ -4,7 +4,8 @@
 Wrapper to manage pipelines with the Deply API
 """
 
-import argparse, yaml
+import argparse
+import yaml
 from .util import get_current_profile_credentials
 from deplyai.schema import Pipeline
 from deplyai._utils.print import pretty_print_json

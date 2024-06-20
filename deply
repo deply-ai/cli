@@ -4,7 +4,6 @@
 """
 DeplyAI CLI Tool
 """
-import os
 import sys
 from src.cmd import commandline_parser
 
